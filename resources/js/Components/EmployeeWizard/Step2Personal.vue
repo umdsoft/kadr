@@ -1,0 +1,211 @@
+<script setup lang="ts">
+import { onMounted, watch } from 'vue';
+import { useGeoCatalog } from '@/Composables/useGeoCatalog';
+import { EDUCATION_LEVELS } from '@/types';
+
+const props = defineProps<{
+    form: Record<string, unknown>;
+    errors: Record<string, string>;
+}>();
+
+const emit = defineEmits<{
+    (e: 'update', field: string, value: unknown): void;
+}>();
+
+const { regions, districts, nationalities, fetchAll, fetchDistricts } = useGeoCatalog();
+
+onMounted(() => fetchAll());
+
+watch(() => props.form.birth_region_id, (val) => {
+    if (val) fetchDistricts(val as number);
+});
+
+function update(field: string, event: Event) {
+    const target = event.target as HTMLInputElement | HTMLSelectElement;
+    emit('update', field, target.value);
+}
+
+function updateSelect(field: string, event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const val = target.value;
+    emit('update', field, field.endsWith('_id') ? Number(val) : val);
+}
+</script>
+
+<template>
+    <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-gray-900">2-қадам: Шахсий маълумотлар</h2>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Туғилган санаси *</label>
+                <input type="date" :value="form.birth_date as string" @input="update('birth_date', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    :class="{ 'border-red-500': errors.birth_date }" />
+                <p v-if="errors.birth_date" class="mt-1 text-xs text-red-600">{{ errors.birth_date }}</p>
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Миллати *</label>
+                <select @change="update('nationality', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Танланг</option>
+                    <option v-for="n in nationalities" :key="n.id" :value="n.name_cyr"
+                        :selected="form.nationality === n.name_cyr">{{ n.name_cyr }}</option>
+                </select>
+                <p v-if="errors.nationality" class="mt-1 text-xs text-red-600">{{ errors.nationality }}</p>
+            </div>
+        </div>
+
+        <!-- Туғилган жойи — dropdown лар -->
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Туғилган вилояти *</label>
+                <select @change="updateSelect('birth_region_id', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Танланг</option>
+                    <option v-for="r in regions" :key="r.id" :value="r.id"
+                        :selected="form.birth_region_id == r.id">{{ r.name_cyr }}</option>
+                </select>
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Туғилган тумани *</label>
+                <select @change="updateSelect('birth_district_id', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Танланг</option>
+                    <option v-for="d in districts" :key="d.id" :value="d.id"
+                        :selected="form.birth_district_id == d.id">{{ d.name_cyr }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-gray-700">Туғилган жойи (тўлиқ) *</label>
+            <input type="text" :value="form.birth_place as string" @input="update('birth_place', $event)"
+                placeholder="Хоразм вилояти, Урганч шаҳри"
+                class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                :class="{ 'border-red-500': errors.birth_place }" />
+            <p v-if="errors.birth_place" class="mt-1 text-xs text-red-600">{{ errors.birth_place }}</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Маълумоти *</label>
+                <select @change="update('education_level', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Танланг</option>
+                    <option v-for="el in EDUCATION_LEVELS" :key="el.value" :value="el.value"
+                        :selected="form.education_level === el.value">{{ el.label }}</option>
+                </select>
+                <p v-if="errors.education_level" class="mt-1 text-xs text-red-600">{{ errors.education_level }}</p>
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Мутахассислиги *</label>
+                <input type="text" :value="form.specialty_by_education as string" @input="update('specialty_by_education', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+                <p v-if="errors.specialty_by_education" class="mt-1 text-xs text-red-600">{{ errors.specialty_by_education }}</p>
+            </div>
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-gray-700">Қаерни тамомлаган *</label>
+            <input type="text" :value="form.education_completion as string" @input="update('education_completion', $event)"
+                placeholder="2012 йил, Урганч давлат университети (кундузги)"
+                class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                :class="{ 'border-red-500': errors.education_completion }" />
+            <p v-if="errors.education_completion" class="mt-1 text-xs text-red-600">{{ errors.education_completion }}</p>
+        </div>
+
+        <!-- Қолган майдонлар -->
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Партиявийлиги</label>
+                <input type="text" :value="form.party_affiliation as string" @input="update('party_affiliation', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Илмий даражаси</label>
+                <input type="text" :value="form.academic_degree as string" @input="update('academic_degree', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Илмий унвони</label>
+                <input type="text" :value="form.academic_title as string" @input="update('academic_title', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Чет тиллари</label>
+                <input type="text" :value="form.foreign_languages as string" @input="update('foreign_languages', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Давлат мукофотлари</label>
+                <input type="text" :value="form.state_awards as string" @input="update('state_awards', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    :class="{ 'border-red-500': errors.state_awards }" />
+                <p v-if="errors.state_awards" class="mt-1 text-xs text-red-600">{{ errors.state_awards }}</p>
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Сайланадиган орган аъзолиги</label>
+                <input type="text" :value="form.elected_body_member as string" @input="update('elected_body_member', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+            </div>
+        </div>
+
+        <!-- Махфий маълумотлар -->
+        <div class="mt-4 rounded-md border border-yellow-200 bg-yellow-50 p-4">
+            <h3 class="mb-3 text-sm font-semibold text-yellow-800">Махфий маълумотлар</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700">ЖШШИР *</label>
+                    <input type="text" :value="form.jshshir as string" @input="update('jshshir', $event)"
+                        maxlength="14" placeholder="14 та рақам"
+                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        :class="{ 'border-red-500': errors.jshshir }" />
+                    <p v-if="errors.jshshir" class="mt-1 text-xs text-red-600">{{ errors.jshshir }}</p>
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700">Паспорт серияси *</label>
+                    <input type="text" :value="form.passport_series as string" @input="update('passport_series', $event)"
+                        maxlength="2" placeholder="AB"
+                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm uppercase focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        :class="{ 'border-red-500': errors.passport_series }" />
+                    <p v-if="errors.passport_series" class="mt-1 text-xs text-red-600">{{ errors.passport_series }}</p>
+                </div>
+                <div>
+                    <label class="mb-1 block text-sm font-medium text-gray-700">Паспорт рақами *</label>
+                    <input type="text" :value="form.passport_number as string" @input="update('passport_number', $event)"
+                        maxlength="7" placeholder="1234567"
+                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        :class="{ 'border-red-500': errors.passport_number }" />
+                    <p v-if="errors.passport_number" class="mt-1 text-xs text-red-600">{{ errors.passport_number }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Бўлим ва лавозим -->
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Бўлими *</label>
+                <select @change="updateSelect('department_id', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Танланг</option>
+                </select>
+                <p v-if="errors.department_id" class="mt-1 text-xs text-red-600">{{ errors.department_id }}</p>
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Лавозими *</label>
+                <select @change="updateSelect('position_id', $event)"
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Танланг</option>
+                </select>
+                <p v-if="errors.position_id" class="mt-1 text-xs text-red-600">{{ errors.position_id }}</p>
+            </div>
+        </div>
+    </div>
+</template>
