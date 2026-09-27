@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravel\Fortify\Features;
 
 return [
@@ -45,7 +47,7 @@ return [
     |
     */
 
-    'username' => 'email',
+    'username' => 'login',
 
     'email' => 'email',
 
@@ -60,7 +62,7 @@ return [
     |
     */
 
-    'lowercase_usernames' => true,
+    'lowercase_usernames' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -144,8 +146,13 @@ return [
     */
 
     'features' => [
-        Features::registration(),
-        Features::resetPasswords(),
+        // Очиқ рўйхатдан ўтиш ЎЧИРИЛДИ — давлат тизими.
+        // Фойдаланувчилар фақат админ томонидан (UserController) яратилади.
+        // Features::registration(),
+        // Password reset ЎЧИРИЛДИ — email йўқ (MAIL_MAILER=log) ва reset view
+        // боғланмаган эди. Паролни админ алмаштиради (UserController) ёки
+        // фойдаланувчи ўзи updatePasswords орқали.
+        // Features::resetPasswords(),
         // Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),

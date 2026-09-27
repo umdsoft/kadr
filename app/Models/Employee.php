@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTenant;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,9 +26,9 @@ use Spatie\Activitylog\Support\LogOptions;
  * @property string|null $first_name_lat
  * @property string|null $middle_name_lat
  * @property string $current_position
- * @property \Carbon\Carbon $position_start_date
+ * @property Carbon $position_start_date
  * @property string|null $photo_path
- * @property \Carbon\Carbon $birth_date
+ * @property Carbon $birth_date
  * @property string $birth_place
  * @property int $birth_region_id
  * @property int $birth_district_id
@@ -40,17 +43,24 @@ use Spatie\Activitylog\Support\LogOptions;
  * @property string $state_awards
  * @property string $elected_body_member
  * @property string $jshshir
+ * @property string|null $jshshir_hash
  * @property string $passport_series
  * @property string $passport_number
  * @property int $department_id
  * @property int $position_id
  * @property string $full_name
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkHistory> $workHistory
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Relative> $relatives
+ * @property-read Collection<int, WorkHistory> $workHistory
+ * @property-read Collection<int, Relative> $relatives
  */
 class Employee extends Model
 {
-    use HasFactory, LogsActivity, SoftDeletes;
+    use BelongsToTenant;
+    use HasFactory;
+    use HasUuids;
+    use LogsActivity;
+    use SoftDeletes;
+
+    public const TENANT_COLUMN = 'hokimlik_id';
 
     protected $fillable = [
         // 1-блок: Сарлавҳа
@@ -86,6 +96,31 @@ class Employee extends Model
         // Хизмат
         'department_id',
         'position_id',
+        'hokimlik_id',
+    ];
+
+    /**
+     * Махфий устунлар — сериализацияда (Inertia payload) ЯШИРИН.
+     * `encrypted` cast очиқ матнни қайтаргани учун, $hidden бўлмаса рўйхат
+     * саҳифасида ҳам ЖШШИР/паспорт браузерга кетарди. Битта ёзувни кўрсатиш
+     * керак бўлса (edit форма) — контроллерда makeVisible() ишлатилади.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'jshshir',
+        'passport_series',
+        'passport_number',
+        'jshshir_hash',
+    ];
+
+    /**
+     * Ҳисобланадиган (accessor) майдонлар — сериализацияга қўшилади.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'photo_url',
     ];
 
     protected function casts(): array
@@ -97,6 +132,32 @@ class Employee extends Model
             'passport_series' => 'encrypted',
             'passport_number' => 'encrypted',
         ];
+    }
+
+    /** id va uuid — иккаласи ҳам автоматик UUID. */
+    public function uniqueIds(): array
+    {
+        return ['id', 'uuid'];
+    }
+
+    protected static function booted(): void
+    {
+        // ЖШШИР шифрланган бўлгани учун (ноаниқ шифрматн) уникалликни DB unique index
+        // таъминлай олмайди. Шунинг учун деттерминистик HMAC хешини сақлаймиз.
+        static::saving(function (Employee $employee): void {
+            $plain = $employee->jshshir; // encrypted cast — очиқ матнни қайтаради
+            $employee->attributes['jshshir_hash'] = ($plain !== null && $plain !== '')
+                ? self::hashJshshir((string) $plain)
+                : null;
+        });
+    }
+
+    /**
+     * ЖШШИР учун деттерминистик HMAC-SHA256 хеши (уникаллик текшируви учун).
+     */
+    public static function hashJshshir(string $plain): string
+    {
+        return hash_hmac('sha256', $plain, (string) config('app.key'));
     }
 
     // ===== Муносабатлар =====
@@ -139,6 +200,18 @@ class Employee extends Model
     public function getFullNameAttribute(): string
     {
         return trim("{$this->last_name_cyr} {$this->first_name_cyr} {$this->middle_name_cyr}");
+    }
+
+    /**
+     * Расм URL и — авторизацияланган маршрут орқали (public диск эмас).
+     * Файлнинг ўзи фақат `employees.photo` маршрути орқали, view рухсати
+     * ва tenant текшируви билан берилади.
+     */
+    public function getPhotoUrlAttribute(): ?string
+    {
+        return ($this->photo_path !== null && $this->photo_path !== '')
+            ? route('employees.photo', $this->id)
+            : null;
     }
 
     // ===== Audit log =====

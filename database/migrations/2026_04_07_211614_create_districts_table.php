@@ -11,8 +11,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('districts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('region_id')->constrained('regions')->restrictOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('region_id')->constrained('regions')->restrictOnDelete();
             $table->string('name_cyr', 100)->comment('Туман/шаҳар номи (Кирилл)');
             $table->string('name_lat', 100)->comment('Tuman/shahar nomi (Lotin)');
             $table->string('code', 10)->unique()->comment('SOATO kodi');

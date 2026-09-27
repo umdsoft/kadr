@@ -4,10 +4,20 @@ import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Step1Header from '@/Components/EmployeeWizard/Step1Header.vue';
 import Step2Personal from '@/Components/EmployeeWizard/Step2Personal.vue';
+import Step3WorkHistory from '@/Components/EmployeeWizard/Step3WorkHistory.vue';
+import Step4Relatives from '@/Components/EmployeeWizard/Step4Relatives.vue';
 import type { WorkHistory, Relative } from '@/types';
 
 const currentStep = ref(1);
 const totalSteps = 4;
+
+const photoFile = ref<File | null>(null);
+
+function handleFile(field: string, file: File | null) {
+    if (field === 'photo') {
+        photoFile.value = file;
+    }
+}
 
 const form = useForm({
     // 1-блок
@@ -19,7 +29,7 @@ const form = useForm({
     middle_name_lat: '',
     current_position: '',
     position_start_date: '',
-    photo_path: null as string | null,
+    photo: null as File | null,
     // 2-блок
     birth_date: '',
     birth_place: '',
@@ -42,13 +52,24 @@ const form = useForm({
     position_id: null as number | null,
 });
 
-// 3-блок ва 4-блок — alohida saqlanadi (Phase 4 route lar orqali)
-// Hozircha wizard faqat 1-2 blokni yaratadi
+// 3-блок: Меҳнат фаолияти
+const workHistory = ref<WorkHistory[]>([]);
+
+function updateWorkHistory(items: WorkHistory[]) {
+    workHistory.value = items;
+}
+
+// 4-блок: Яқин қариндошлар
+const relatives = ref<Relative[]>([]);
+
+function updateRelatives(items: Relative[]) {
+    relatives.value = items;
+}
 
 const stepLabels = ['Сарлавҳа', 'Шахсий маълумотлар', 'Меҳнат фаолияти', 'Қариндошлар'];
 
 function updateField(field: string, value: unknown) {
-    (form as Record<string, unknown>)[field] = value;
+    (form as unknown as Record<string, unknown>)[field] = value;
 }
 
 function nextStep() {
@@ -64,8 +85,17 @@ function prevStep() {
 }
 
 function submit() {
-    form.post('/employees', {
-        onSuccess: () => form.reset(),
+    form.transform((data) => ({
+        ...data,
+        photo: photoFile.value,
+        work_history: workHistory.value,
+        relatives: relatives.value,
+    })).post('/employees', {
+        onSuccess: () => {
+            form.reset();
+            workHistory.value = [];
+            relatives.value = [];
+        },
     });
 }
 </script>
@@ -104,30 +134,16 @@ function submit() {
         <div class="rounded-lg bg-white p-6 shadow">
             <form @submit.prevent="submit">
                 <!-- 1-қадам -->
-                <div v-show="currentStep === 1">
-                    <Step1Header :form="form" :errors="form.errors" @update="updateField" />
-                </div>
+                <Step1Header v-if="currentStep === 1" :form="(form as unknown as Record<string, unknown>)" :errors="form.errors" @update="updateField" @file="handleFile" />
 
                 <!-- 2-қадам -->
-                <div v-show="currentStep === 2">
-                    <Step2Personal :form="form" :errors="form.errors" @update="updateField" />
-                </div>
+                <Step2Personal v-if="currentStep === 2" :form="(form as unknown as Record<string, unknown>)" :errors="form.errors" @update="updateField" />
 
-                <!-- 3-қадам (Phase 7 да тўлдирилади — hozir xabar) -->
-                <div v-show="currentStep === 3">
-                    <div class="py-12 text-center text-gray-500">
-                        <p class="text-lg">Меҳнат фаолияти</p>
-                        <p class="mt-2 text-sm">Ходим яратилгандан кейин, профиль саҳифасидан қўшиш мумкин.</p>
-                    </div>
-                </div>
+                <!-- 3-қадам -->
+                <Step3WorkHistory v-if="currentStep === 3" :items="workHistory" :errors="form.errors" @update="updateWorkHistory" />
 
                 <!-- 4-қадам -->
-                <div v-show="currentStep === 4">
-                    <div class="py-12 text-center text-gray-500">
-                        <p class="text-lg">Яқин қариндошлар</p>
-                        <p class="mt-2 text-sm">Ходим яратилгандан кейин, профиль саҳифасидан қўшиш мумкин.</p>
-                    </div>
-                </div>
+                <Step4Relatives v-if="currentStep === 4" :items="relatives" :errors="form.errors" @update="updateRelatives" />
 
                 <!-- Навигация тугмалари -->
                 <div class="mt-8 flex items-center justify-between border-t border-gray-200 pt-4">

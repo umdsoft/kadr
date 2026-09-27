@@ -23,3 +23,11 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/composer.phar
+/composer-setup.php
+# Maxfiy ma'lumotlar (server/DB parollari) — HECH QACHON commit qilinmasin
+/.credentials.local.txt
+/.credentials/
+*.local.txt
+/secrets*
+.vite/

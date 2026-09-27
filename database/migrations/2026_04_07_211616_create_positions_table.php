@@ -11,8 +11,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('positions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('department_id')->nullable()->constrained('departments')->restrictOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('department_id')->nullable()->constrained('departments')->restrictOnDelete();
             $table->string('name_cyr', 255)->comment('Лавозим номи (Кирилл)');
             $table->string('name_lat', 255)->comment('Lavozim nomi (Lotin)');
             $table->boolean('is_active')->default(true);

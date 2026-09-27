@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,11 +17,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $is_deceased
  * @property int|null $deceased_year
  * @property string $workplace_and_position
+ * @property string|null $former_position
  * @property string $residence_full
  */
 class Relative extends Model
 {
     use HasFactory;
+    use HasUuids;
 
     protected $table = 'employee_relatives';
 
@@ -33,6 +36,7 @@ class Relative extends Model
         'is_deceased',
         'deceased_year',
         'workplace_and_position',
+        'former_position',
         'residence_full',
     ];
 

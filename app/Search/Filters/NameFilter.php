@@ -15,12 +15,14 @@ class NameFilter implements FilterInterface
     {
         $search = (string) $value;
 
+        // whereLike (caseSensitive=false) — PostgreSQL'да ILIKE, MySQL/SQLite'да LIKE.
+        // pg_trgm GIN индекси билан катта базада ҳам тез ишлайди.
         return $query->where(function (Builder $q) use ($search) {
-            $q->where('last_name_cyr', 'like', "%{$search}%")
-                ->orWhere('first_name_cyr', 'like', "%{$search}%")
-                ->orWhere('middle_name_cyr', 'like', "%{$search}%")
-                ->orWhere('last_name_lat', 'like', "%{$search}%")
-                ->orWhere('first_name_lat', 'like', "%{$search}%");
+            $q->whereLike('last_name_cyr', "%{$search}%")
+                ->orWhereLike('first_name_cyr', "%{$search}%")
+                ->orWhereLike('middle_name_cyr', "%{$search}%")
+                ->orWhereLike('last_name_lat', "%{$search}%")
+                ->orWhereLike('first_name_lat', "%{$search}%");
         });
     }
 }

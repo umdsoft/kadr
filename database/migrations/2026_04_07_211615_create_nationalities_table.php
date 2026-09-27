@@ -11,7 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('nationalities', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name_cyr', 50)->unique()->comment('Миллат номи (Кирилл)');
             $table->string('name_lat', 50)->unique()->comment('Millat nomi (Lotin)');
             $table->boolean('is_active')->default(true);

@@ -13,10 +13,9 @@
         "forceConsistentCasingInFileNames": true,
         "useDefineForClassFields": true,
         "sourceMap": true,
-        "baseUrl": ".",
         "types": ["vite/client"],
         "paths": {
-            "@/*": ["resources/js/*"]
+            "@/*": ["./resources/js/*"]
         },
         "lib": ["ESNext", "DOM", "DOM.Iterable"]
     },

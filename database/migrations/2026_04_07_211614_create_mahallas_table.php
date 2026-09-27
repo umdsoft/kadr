@@ -11,8 +11,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mahallas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('district_id')->constrained('districts')->restrictOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('district_id')->constrained('districts')->restrictOnDelete();
             $table->string('name_cyr', 150)->comment('Маҳалла номи (Кирилл)');
             $table->string('name_lat', 150)->comment('Mahalla nomi (Lotin)');
             $table->boolean('is_active')->default(true);

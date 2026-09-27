@@ -11,14 +11,26 @@ class StoreEmployeeRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->can('employee.create') ?? false;
+        return $this->user()?->can('kadrlar.create') ?? false;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function rules(): array
     {
-        return app(ValidationRulesService::class)->employeeRules();
+        $service = app(ValidationRulesService::class);
+        $rules = $service->employeeRules();
+
+        // 3-блок: Меҳнат фаолияти (ихтиёрий) — ServiceRules dan keladi, lekin "required" emas
+        $rules['work_history'] = ['nullable', 'array'];
+        foreach ($service->workHistoryItemRules() as $field => $itemRule) {
+            $rules["work_history.*.{$field}"] = $itemRule;
+        }
+
+        // 4-блок: Яқин қариндошлар (ихтиёрий)
+        $rules['relatives'] = ['nullable', 'array'];
+        foreach ($service->relativesItemRules() as $field => $itemRule) {
+            $rules["relatives.*.{$field}"] = $itemRule;
+        }
+
+        return $rules;
     }
 }

@@ -10,19 +10,19 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface EmployeeRepositoryInterface
 {
-    public function find(int $id): ?Employee;
+    public function find(string $id): ?Employee;
 
     public function findByUuid(string $uuid): ?Employee;
 
     public function create(EmployeeDTO $dto): Employee;
 
-    public function update(int $id, EmployeeDTO $dto): Employee;
+    public function update(string $id, EmployeeDTO $dto): Employee;
 
-    public function delete(int $id): bool;
+    public function delete(string $id): bool;
 
-    public function restore(int $id): bool;
+    public function restore(string $id): bool;
 
-    public function forceDelete(int $id): bool;
+    public function forceDelete(string $id): bool;
 
     /**
      * @param  array<string, mixed>  $filters

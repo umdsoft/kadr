@@ -15,7 +15,7 @@ class DeleteEmployeeAction
     /**
      * Soft delete — TT бўлим 4.4: ҳақиқий ўчириш йўқ.
      */
-    public function execute(int $id): bool
+    public function execute(string $id): bool
     {
         return $this->repository->delete($id);
     }

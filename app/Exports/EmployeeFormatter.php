@@ -29,6 +29,8 @@ class EmployeeFormatter
             // 2-блок: Шахсий маълумотлар
             'birth_date' => $this->formatBirthDate($employee->birth_date),
             'birth_place' => $employee->birth_place,
+            'birth_region' => $employee->birthRegion?->name_cyr,
+            'birth_district' => $employee->birthDistrict?->name_cyr,
             'nationality' => $employee->nationality,
             'party_affiliation' => $employee->party_affiliation,
             'education_level' => $employee->education_level,

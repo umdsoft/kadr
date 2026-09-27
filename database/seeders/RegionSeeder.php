@@ -29,7 +29,7 @@ class RegionSeeder extends Seeder
         ];
 
         foreach ($regions as $region) {
-            Region::create($region);
+            Region::firstOrCreate(['code' => $region['code']], $region);
         }
     }
 }

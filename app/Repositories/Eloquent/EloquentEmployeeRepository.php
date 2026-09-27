@@ -16,7 +16,8 @@ class EloquentEmployeeRepository implements EmployeeRepositoryInterface
     public function __construct(
         private EmployeeSearchService $searchService,
     ) {}
-    public function find(int $id): ?Employee
+
+    public function find(string $id): ?Employee
     {
         return Employee::with(['department', 'position', 'birthRegion', 'birthDistrict'])->find($id);
     }
@@ -36,7 +37,7 @@ class EloquentEmployeeRepository implements EmployeeRepositoryInterface
         return Employee::create($data);
     }
 
-    public function update(int $id, EmployeeDTO $dto): Employee
+    public function update(string $id, EmployeeDTO $dto): Employee
     {
         $employee = Employee::findOrFail($id);
         $employee->update($dto->toArray());
@@ -45,21 +46,21 @@ class EloquentEmployeeRepository implements EmployeeRepositoryInterface
         return $employee->fresh(['department', 'position', 'birthRegion', 'birthDistrict']);
     }
 
-    public function delete(int $id): bool
+    public function delete(string $id): bool
     {
         $employee = Employee::findOrFail($id);
 
         return (bool) $employee->delete();
     }
 
-    public function restore(int $id): bool
+    public function restore(string $id): bool
     {
         $employee = Employee::withTrashed()->findOrFail($id);
 
         return $employee->restore();
     }
 
-    public function forceDelete(int $id): bool
+    public function forceDelete(string $id): bool
     {
         $employee = Employee::withTrashed()->findOrFail($id);
 

@@ -31,7 +31,7 @@ function removeRow(index: number) {
 
 function updateField(index: number, field: keyof WorkHistory, value: unknown) {
     const items = [...props.items];
-    (items[index] as Record<string, unknown>)[field] = value;
+    (items[index] as unknown as Record<string, unknown>)[field] = value;
     emit('update', items);
 }
 </script>

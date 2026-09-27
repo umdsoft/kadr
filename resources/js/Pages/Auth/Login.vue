@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const form = useForm({
-    email: '',
+    login: '',
     password: '',
     remember: false,
 });
@@ -29,8 +29,8 @@ const submit = () => {
                         </svg>
                     </div>
                     <div>
-                        <p class="text-lg font-bold text-white">КБТ</p>
-                        <p class="text-xs text-blue-200">Кадрлар Бошқарув Тизими</p>
+                        <p class="text-lg font-bold text-white">ХВҲБТ</p>
+                        <p class="text-xs text-blue-200">Бошқарув тизими</p>
                     </div>
                 </div>
             </div>
@@ -40,8 +40,9 @@ const submit = () => {
                     Хоразм вилояти<br/>ҳокимлиги
                 </h1>
                 <p class="mt-4 max-w-md text-base leading-relaxed text-blue-200">
-                    Электрон кадрлар бошқаруви тизими. Ходимларнинг расмий маълумотномаларини
-                    электрон шаклда юритиш, қидирув ва таҳлил қилиш имконияти.
+                    Хоразм вилояти ҳокимлигининг ягона бошқарув тизими.
+                    Кадрлар, назорат режалар, фуқаро мурожаатлари ва
+                    ҳужжат айланиши электрон шаклда.
                 </p>
 
                 <div class="mt-10 grid grid-cols-3 gap-6">
@@ -78,58 +79,50 @@ const submit = () => {
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                         </svg>
                     </div>
-                    <h2 class="mt-3 text-lg font-bold text-slate-900">КБТ</h2>
+                    <h2 class="mt-3 text-lg font-bold text-slate-900">ХВҲБТ</h2>
                     <p class="text-xs text-slate-400">Хоразм вилояти ҳокимлиги</p>
                 </div>
 
                 <div>
                     <h2 class="text-2xl font-bold tracking-tight text-slate-900">Тизимга кириш</h2>
-                    <p class="mt-2 text-sm text-slate-500">Электрон почта ва парол орқали киринг</p>
+                    <p class="mt-2 text-sm text-slate-500">Логин ва парол орқали киринг</p>
                 </div>
 
                 <!-- Хатолик -->
-                <div v-if="form.errors.email && form.errors.email.includes('credentials')"
+                <div v-if="form.errors.login"
                     class="mt-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3">
                     <svg class="h-5 w-5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
                     </svg>
-                    <p class="text-sm text-red-700">Электрон почта ёки парол нотўғри</p>
+                    <p class="text-sm text-red-700">Логин ёки парол нотўғри</p>
                 </div>
 
                 <form @submit.prevent="submit" class="mt-8 space-y-5">
-                    <!-- Электрон почта -->
+                    <!-- Логин -->
                     <div>
-                        <label for="email" class="block text-sm font-medium text-slate-700">
-                            Электрон почта
-                        </label>
+                        <label for="login" class="block text-sm font-medium text-slate-700">Логин</label>
                         <div class="relative mt-1.5">
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                                 <svg class="h-4.5 w-4.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                 </svg>
                             </div>
                             <input
-                                id="email"
-                                v-model="form.email"
-                                type="email"
+                                id="login"
+                                v-model="form.login"
+                                type="text"
                                 required
                                 autofocus
                                 autocomplete="username"
-                                placeholder="admin@kbt.uz"
+                                placeholder="Логинингизни киритинг"
                                 class="block w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-shadow"
-                                :class="{ 'border-red-400 focus:border-red-500 focus:ring-red-500/20': form.errors.email }"
                             />
                         </div>
-                        <p v-if="form.errors.email && !form.errors.email.includes('credentials')" class="mt-1.5 text-xs text-red-600">
-                            {{ form.errors.email }}
-                        </p>
                     </div>
 
                     <!-- Парол -->
                     <div>
-                        <label for="password" class="block text-sm font-medium text-slate-700">
-                            Парол
-                        </label>
+                        <label for="password" class="block text-sm font-medium text-slate-700">Парол</label>
                         <div class="relative mt-1.5">
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
                                 <svg class="h-4.5 w-4.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -144,7 +137,6 @@ const submit = () => {
                                 autocomplete="current-password"
                                 placeholder="Паролингизни киритинг"
                                 class="block w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-10 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-shadow"
-                                :class="{ 'border-red-400 focus:border-red-500 focus:ring-red-500/20': form.errors.password }"
                             />
                             <button
                                 type="button"
@@ -160,19 +152,13 @@ const submit = () => {
                                 </svg>
                             </button>
                         </div>
-                        <p v-if="form.errors.password" class="mt-1.5 text-xs text-red-600">
-                            {{ form.errors.password }}
-                        </p>
                     </div>
 
                     <!-- Эслаб қолиш -->
                     <div class="flex items-center justify-between">
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input
-                                v-model="form.remember"
-                                type="checkbox"
-                                class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500/20 focus:ring-offset-0 transition-colors"
-                            />
+                            <input v-model="form.remember" type="checkbox"
+                                class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500/20 focus:ring-offset-0 transition-colors" />
                             <span class="text-sm text-slate-600">Эслаб қолиш</span>
                         </label>
                     </div>

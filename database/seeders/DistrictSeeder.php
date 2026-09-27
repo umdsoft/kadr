@@ -32,7 +32,7 @@ class DistrictSeeder extends Seeder
         ];
 
         foreach ($xorazmDistricts as $district) {
-            District::create([...$district, 'region_id' => $xorazm->id]);
+            District::firstOrCreate(['code' => $district['code']], [...$district, 'region_id' => $xorazm->id]);
         }
     }
 }

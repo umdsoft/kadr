@@ -14,8 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee_work_history', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('employee_id')->constrained()->cascadeOnDelete();
             $table->smallInteger('start_year')->comment('Бошланиш йили');
             $table->smallInteger('end_year')->nullable()->comment('Тугаш йили (NULL = ҳозирги вақт)');
             $table->text('organization_full')->comment('Ташкилот тўлиқ номи — қисқартиришсиз');

@@ -1,23 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Department;
 use App\Models\District;
 use App\Models\Employee;
 use App\Models\Position;
 use App\Models\Region;
+use App\Models\Role;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    // Rollar va permissionlar
-    Permission::create(['name' => 'employee.view']);
-    Permission::create(['name' => 'employee.create']);
-    Permission::create(['name' => 'employee.update']);
-    Permission::create(['name' => 'employee.delete']);
-
-    $hrStaff = Role::create(['name' => 'hr-staff']);
-    $hrStaff->givePermissionTo(['employee.view', 'employee.create', 'employee.update', 'employee.delete']);
+    // Super-admin — Gate::before orqali barcha policy va tenant tekshiruvlaridan o'tadi.
+    // (Bu yerda CRUD funksiyasi sinaladi; ruxsat rad etilishi RbacTest da sinaladi.)
+    Role::create(['name' => 'super-admin']);
 
     // Katalog ma'lumotlari
     $this->region = Region::create(['name_cyr' => 'Хоразм вилояти', 'name_lat' => 'Xorazm viloyati', 'code' => '1733']);
@@ -31,7 +27,7 @@ beforeEach(function () {
     $this->position = Position::create(['name_cyr' => 'Мутахассис', 'name_lat' => 'Mutaxassis']);
 
     $this->user = User::factory()->create();
-    $this->user->assignRole('hr-staff');
+    $this->user->assignRole('super-admin');
 });
 
 function validEmployeeData(object $test): array

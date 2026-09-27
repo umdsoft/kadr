@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 
 test('login sahifasi render bo\'ladi', function () {
@@ -11,8 +13,9 @@ test('login sahifasi render bo\'ladi', function () {
 test('foydalanuvchi to\'g\'ri ma\'lumotlar bilan kiroladi', function () {
     $user = User::factory()->create();
 
+    // Fortify username maydoni = 'login'
     $response = $this->post('/login', [
-        'email' => $user->email,
+        'login' => $user->login,
         'password' => 'password',
     ]);
 
@@ -24,7 +27,7 @@ test('noto\'g\'ri parol bilan kirib bo\'lmaydi', function () {
     $user = User::factory()->create();
 
     $this->post('/login', [
-        'email' => $user->email,
+        'login' => $user->login,
         'password' => 'wrong-password',
     ]);
 

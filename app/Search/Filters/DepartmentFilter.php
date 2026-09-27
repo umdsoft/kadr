@@ -13,6 +13,6 @@ class DepartmentFilter implements FilterInterface
 {
     public function apply(Builder $query, mixed $value): Builder
     {
-        return $query->where('department_id', (int) $value);
+        return $query->where('department_id', $value);
     }
 }

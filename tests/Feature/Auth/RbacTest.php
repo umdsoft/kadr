@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
     // Har bir test uchun rollar va permissionlar yaratamiz

@@ -11,7 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('regions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name_cyr', 100)->comment('Вилоят номи (Кирилл)');
             $table->string('name_lat', 100)->comment('Viloyat nomi (Lotin)');
             $table->string('code', 10)->unique()->comment('SOATO kodi');

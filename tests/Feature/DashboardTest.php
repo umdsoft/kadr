@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Employee;
 use App\Models\User;
 
-test('dashboard statistika bilan yuklaydi', function () {
+test('dashboard tenant rejimida statistika bilan yuklaydi', function () {
     $user = User::factory()->create();
 
-    // Biroz ma'lumot yaratamiz
+    // Biroz ma'lumot (tenant context null bo'lgani uchun global scope hammasini sanaydi)
     Employee::factory()->count(3)->create();
 
     $response = $this->actingAs($user)->get('/');
@@ -14,11 +16,10 @@ test('dashboard statistika bilan yuklaydi', function () {
     $response->assertStatus(200)
         ->assertInertia(fn ($page) => $page
             ->component('Dashboard')
-            ->has('stats')
+            ->where('mode', 'tenant')
             ->where('stats.total_employees', 3)
-            ->has('by_department')
-            ->has('by_education')
-            ->has('recent_activity')
+            ->has('control_plan_stats')
+            ->has('recent_activity'),
         );
 });
 

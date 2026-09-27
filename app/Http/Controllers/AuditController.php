@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
+use App\Models\User;
+use App\Support\ActivityTranslator;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Activitylog\Models\Activity;
 
 class AuditController extends Controller
 {
@@ -17,7 +19,7 @@ class AuditController extends Controller
 
         if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->where('description', 'like', "%{$search}%");
+            $query->whereLike('description', "%{$search}%");
         }
 
         if ($request->filled('subject_type')) {
@@ -25,15 +27,17 @@ class AuditController extends Controller
         }
 
         return Inertia::render('Audit/Index', [
-            'activities' => $query->paginate(25)->through(function (Activity $a): array {
-                /** @var \App\Models\User|null $causer */
+            'activities' => $query->paginate(25)->withQueryString()->through(function (Activity $a): array {
+                /** @var User|null $causer */
                 $causer = $a->causer;
+
+                $subject = class_basename((string) $a->subject_type);
 
                 return [
                     'id' => $a->id,
                     'log_name' => $a->log_name,
-                    'description' => $a->description,
-                    'subject_type' => class_basename((string) $a->subject_type),
+                    'description' => ActivityTranslator::event($a->description),
+                    'subject_type' => ActivityTranslator::subject($subject),
                     'subject_id' => $a->subject_id,
                     'causer' => $causer !== null ? $causer->name : 'Тизим',
                     'properties' => $a->properties,

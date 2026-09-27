@@ -6,67 +6,49 @@ namespace App\Policies;
 
 use App\Models\Employee;
 use App\Models\User;
+use App\Policies\Concerns\ChecksTenantAccess;
 
-/**
- * TT бўлим 8 — Ходим маълумотлари устидаги ҳуқуқлар.
- */
 class EmployeePolicy
 {
-    /**
-     * Рўйхатни кўриш.
-     */
+    use ChecksTenantAccess;
+
     public function viewAny(User $user): bool
     {
-        return $user->hasAnyPermission(['employee.view', 'employee.view.own-department']);
+        return $user->hasPermissionTo('kadrlar.view');
     }
 
-    /**
-     * Битта ходимни кўриш.
-     */
     public function view(User $user, Employee $employee): bool
     {
-        if ($user->hasPermissionTo('employee.view')) {
-            return true;
-        }
-
-        // Бўлим бошлиғи — фақат ўз бўлими
-        if ($user->hasPermissionTo('employee.view.own-department')) {
-            return $user->department_id === $employee->department_id;
-        }
-
-        return false;
+        return $user->hasPermissionTo('kadrlar.view') && $this->sameTenant($user, $employee);
     }
 
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('employee.create');
+        return $user->hasPermissionTo('kadrlar.create');
     }
 
     public function update(User $user, Employee $employee): bool
     {
-        return $user->hasPermissionTo('employee.update');
+        return $user->hasPermissionTo('kadrlar.update') && $this->sameTenant($user, $employee);
     }
 
     public function delete(User $user, Employee $employee): bool
     {
-        return $user->hasPermissionTo('employee.delete');
+        return $user->hasPermissionTo('kadrlar.delete') && $this->sameTenant($user, $employee);
     }
 
     public function restore(User $user, Employee $employee): bool
     {
-        return $user->hasPermissionTo('employee.restore');
+        return $user->hasPermissionTo('kadrlar.delete') && $this->sameTenant($user, $employee);
     }
 
     public function forceDelete(User $user, Employee $employee): bool
     {
-        return $user->hasPermissionTo('employee.force-delete');
+        return $user->hasPermissionTo('kadrlar.delete') && $this->sameTenant($user, $employee);
     }
 
-    /**
-     * DOCX экспорт қилиш.
-     */
     public function export(User $user): bool
     {
-        return $user->hasPermissionTo('employee.export');
+        return $user->hasPermissionTo('kadrlar.export');
     }
 }

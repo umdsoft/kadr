@@ -32,11 +32,11 @@ function removeRow(index: number) {
 
 function updateField(index: number, field: string, value: unknown) {
     const items = [...props.items];
-    (items[index] as Record<string, unknown>)[field] = value;
+    (items[index] as unknown as Record<string, unknown>)[field] = value;
     // Вафот этган checkbox ўзгарса — майдонларни тозалаш
     if (field === 'is_deceased' && !value) {
-        (items[index] as Record<string, unknown>).deceased_year = null;
-        (items[index] as Record<string, unknown>).former_position = '';
+        (items[index] as unknown as Record<string, unknown>).deceased_year = null;
+        (items[index] as unknown as Record<string, unknown>).former_position = '';
     }
     emit('update', items);
 }

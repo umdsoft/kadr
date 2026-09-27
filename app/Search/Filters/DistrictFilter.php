@@ -13,6 +13,6 @@ class DistrictFilter implements FilterInterface
 {
     public function apply(Builder $query, mixed $value): Builder
     {
-        return $query->where('birth_district_id', (int) $value);
+        return $query->where('birth_district_id', $value);
     }
 }

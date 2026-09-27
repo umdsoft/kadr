@@ -11,26 +11,26 @@ class PositionSeeder extends Seeder
 {
     public function run(): void
     {
-        // Умумий лавозимлар (бўлимга боғлиқ эмас)
         $positions = [
-            ['name_cyr' => 'Ҳоким', 'name_lat' => 'Hokim'],
-            ['name_cyr' => 'Ҳоким ўринбосари', 'name_lat' => 'Hokim o\'rinbosari'],
-            ['name_cyr' => 'Бўлим бошлиғи', 'name_lat' => 'Bo\'lim boshlig\'i'],
-            ['name_cyr' => 'Бўлим бошлиғи ўринбосари', 'name_lat' => 'Bo\'lim boshlig\'i o\'rinbosari'],
-            ['name_cyr' => 'Бош мутахассис', 'name_lat' => 'Bosh mutaxassis'],
-            ['name_cyr' => 'Етакчи мутахассис', 'name_lat' => 'Yetakchi mutaxassis'],
-            ['name_cyr' => 'Мутахассис', 'name_lat' => 'Mutaxassis'],
-            ['name_cyr' => 'Бош бухгалтер', 'name_lat' => 'Bosh buxgalter'],
-            ['name_cyr' => 'Бухгалтер', 'name_lat' => 'Buxgalter'],
-            ['name_cyr' => 'Маслаҳатчи', 'name_lat' => 'Maslahatchi'],
-            ['name_cyr' => 'Котиб', 'name_lat' => 'Kotib'],
-            ['name_cyr' => 'Ҳайдовчи', 'name_lat' => 'Haydovchi'],
-            ['name_cyr' => 'Тизим маъмури', 'name_lat' => 'Tizim ma\'muri'],
-            ['name_cyr' => 'Кадрлар бўйича инспектор', 'name_lat' => 'Kadrlar bo\'yicha inspektor'],
+            ['name_cyr' => 'Ҳоким', 'name_lat' => 'Hokim', 'role_name' => 'super-admin'],
+            ['name_cyr' => 'Ҳоким маслаҳатчиси', 'name_lat' => 'Hokim maslahatchisi', 'role_name' => 'hokim-maslahatchisi'],
+            ['name_cyr' => 'Ҳоким ўринбосари', 'name_lat' => 'Hokim orinbosari', 'role_name' => 'hokim-orinbosari'],
+            ['name_cyr' => 'Котибият мудири', 'name_lat' => 'Kotibyat mudiri', 'role_name' => 'kotibyat-mudiri'],
+            ['name_cyr' => 'Туман ҳокими ўринбосари', 'name_lat' => 'Tuman hokimi orinbosari', 'role_name' => 'tuman-admin'],
+            ['name_cyr' => 'Туман ҳокимлиги мутахассиси', 'name_lat' => 'Tuman hokimligi mutaxassisi', 'role_name' => 'tuman-mutaxassis'],
+            ['name_cyr' => 'Бўлим бошлиғи', 'name_lat' => 'Bo\'lim boshlig\'i', 'role_name' => 'mutaxassis'],
+            ['name_cyr' => 'Бош мутахассис', 'name_lat' => 'Bosh mutaxassis', 'role_name' => 'mutaxassis'],
+            ['name_cyr' => 'Етакчи мутахассис', 'name_lat' => 'Yetakchi mutaxassis', 'role_name' => 'mutaxassis'],
+            ['name_cyr' => 'Мутахассис', 'name_lat' => 'Mutaxassis', 'role_name' => 'mutaxassis'],
+            ['name_cyr' => 'Ахборот таҳлил гуруҳи аъзоси', 'name_lat' => 'Axborot tahlil guruhi', 'role_name' => 'axborot-tahlil'],
+            ['name_cyr' => 'Кадрлар бўйича инспектор', 'name_lat' => 'Kadrlar inspektori', 'role_name' => 'kadrlar-xodimi'],
+            ['name_cyr' => 'Бош бухгалтер', 'name_lat' => 'Bosh buxgalter', 'role_name' => 'mutaxassis'],
+            ['name_cyr' => 'Котиб', 'name_lat' => 'Kotib', 'role_name' => 'mutaxassis'],
+            ['name_cyr' => 'Тизим маъмури', 'name_lat' => 'Tizim ma\'muri', 'role_name' => 'super-admin'],
         ];
 
         foreach ($positions as $i => $position) {
-            Position::create([...$position, 'sort_order' => $i + 1]);
+            Position::firstOrCreate(['name_cyr' => $position['name_cyr']], [...$position, 'sort_order' => $i + 1]);
         }
     }
 }

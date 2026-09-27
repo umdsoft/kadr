@@ -6,7 +6,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { createPinia } from 'pinia';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
-const appName = 'КБТ — Кадрлар Бошқарув Тизими';
+const appName = 'Хоразм вилояти ҳокимлиги бошқарув тизими';
 
 createInertiaApp({
     title: (title: string) => title ? `${title} — ${appName}` : appName,

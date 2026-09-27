@@ -34,7 +34,7 @@ class SpecialtySeeder extends Seeder
         ];
 
         foreach ($specialties as $i => $specialty) {
-            Specialty::create([...$specialty, 'sort_order' => $i + 1]);
+            Specialty::firstOrCreate(['name_cyr' => $specialty['name_cyr']], [...$specialty, 'sort_order' => $i + 1]);
         }
     }
 }

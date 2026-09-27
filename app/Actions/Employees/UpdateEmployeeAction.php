@@ -14,7 +14,7 @@ class UpdateEmployeeAction
         private EmployeeRepositoryInterface $repository,
     ) {}
 
-    public function execute(int $id, EmployeeDTO $dto): Employee
+    public function execute(string $id, EmployeeDTO $dto): Employee
     {
         return $this->repository->update($id, $dto);
     }

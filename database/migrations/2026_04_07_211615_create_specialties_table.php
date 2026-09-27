@@ -11,7 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('specialties', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name_cyr', 255)->comment('Мутахассислик номи (Кирилл)');
             $table->string('name_lat', 255)->comment('Mutaxassislik nomi (Lotin)');
             $table->boolean('is_active')->default(true);

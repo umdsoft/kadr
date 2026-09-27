@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\EmployeeRepositoryInterface;
+use App\Repositories\Eloquent\EloquentEmployeeRepository;
+use App\Support\Tenant\TenantContext;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,13 +18,13 @@ class AppServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     public array $bindings = [
-        \App\Repositories\Contracts\EmployeeRepositoryInterface::class
-            => \App\Repositories\Eloquent\EloquentEmployeeRepository::class,
+        EmployeeRepositoryInterface::class => EloquentEmployeeRepository::class,
     ];
 
     public function register(): void
     {
-        //
+        // Tenant context request davomida bitta instance bo'ladi
+        $this->app->scoped(TenantContext::class);
     }
 
     public function boot(): void

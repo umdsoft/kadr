@@ -13,6 +13,7 @@ class SpecialtyFilter implements FilterInterface
 {
     public function apply(Builder $query, mixed $value): Builder
     {
-        return $query->where('specialty_by_education', 'like', "%{$value}%");
+        // caseSensitive=false — PostgreSQL'да ILIKE.
+        return $query->whereLike('specialty_by_education', "%{$value}%");
     }
 }

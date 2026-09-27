@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\District;
-use App\Models\Mahalla;
 use App\Models\Nationality;
 use App\Models\Position;
 use App\Models\Region;
@@ -74,7 +73,7 @@ class CatalogController extends Controller
                 ->where('is_active', true)
                 ->whereNull('parent_id')
                 ->orderBy('sort_order')
-                ->get(['id', 'parent_id', 'name_cyr', 'name_lat', 'code']),
+                ->get(['id', 'parent_id', 'name_cyr', 'name_lat', 'code', 'type']),
         );
     }
 
@@ -83,7 +82,10 @@ class CatalogController extends Controller
         $query = Position::where('is_active', true)->orderBy('sort_order');
 
         if ($department) {
-            $query->where('department_id', $department->id);
+            $query->where(function ($q) use ($department) {
+                $q->where('department_id', $department->id)
+                    ->orWhereNull('department_id');
+            });
         }
 
         return response()->json(

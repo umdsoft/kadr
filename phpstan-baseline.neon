@@ -1,0 +1,931 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#2 \$assignedBy of method App\\Services\\Appeals\\AppealRoutingService\:\:route\(\) expects int\|null, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Actions/Appeals/CreateAppealAction.php
+
+		-
+			message: '#^Match arm comparison between ''escalate'' and ''escalate'' is always true\.$#'
+			identifier: match.alwaysTrue
+			count: 1
+			path: app/Actions/Appeals/RecordCouncilDecisionAction.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:responsibles\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Actions/ControlPlans/SaveControlPlanItemsAction.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$deadline\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Actions/ControlPlans/UpdateOverdueStatusAction.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$execution_status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Actions/ControlPlans/UpdateOverdueStatusAction.php
+
+		-
+			message: '#^Method App\\Enums\\ExecutionStatus\:\:pendingStatuses\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Enums/ExecutionStatus.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$deadline\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$execution_report\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$execution_status\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$implementation\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$item_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$responsibles\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$task_description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Method App\\Exports\\ControlPlanDocxExporter\:\:addHeaderCell\(\) has parameter \$row with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Method App\\Exports\\ControlPlanDocxExporter\:\:getDisplayPosition\(\) has parameter \$resp with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Exports/ControlPlanDocxExporter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name_cyr\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Exports/EmployeeFormatter.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$assignee_type\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/CitizenAppealController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:resolveAssignee\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/CitizenAppealController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\CitizenAppealController\:\:resolveName\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/CitizenAppealController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$can_edit\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ControlPlanController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$responsibles\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ControlPlanController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/ControlPlanController.php
+
+		-
+			message: '#^Cannot call method hasRole\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/ControlPlanController.php
+
+		-
+			message: '#^Parameter \#2 \$item of method App\\Services\\ControlPlanAccessService\:\:canEditItem\(\) expects App\\Models\\ControlPlanItem, Illuminate\\Database\\Eloquent\\Model given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ControlPlanController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name_cyr\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:displayName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Cannot call method copy\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Instanceof between string and App\\Enums\\TaskSource will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:presentDashTask\(\) has parameter \$today with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:recentActivity\(\) should return Illuminate\\Support\\Collection\<int, array\<string, mixed\>\> but returns Illuminate\\Support\\Collection\<int, array\{id\: int, description\: string, subject_type\: string, causer\: mixed, created_at\: string\|null\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:tasksByOrganization\(\) has parameter \$today with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\Activity\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\ControlPlanItem\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 2
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\Activity\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\ControlPlanItem\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 2
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:all\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 2
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Parameter \#1 \$id of method App\\Actions\\Employees\\DeleteEmployeeAction\:\:execute\(\) expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/EmployeeController.php
+
+		-
+			message: '#^Parameter \#1 \$id of method App\\Actions\\Employees\\UpdateEmployeeAction\:\:execute\(\) expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/EmployeeController.php
+
+		-
+			message: '#^Parameter \#2 \$createdBy of method App\\Actions\\HokimYordamchilari\\CreateHyAction\:\:execute\(\) expects int, int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/HokimYordamchisiController.php
+
+		-
+			message: '#^Parameter \#2 \$item of method App\\Services\\ControlPlanAccessService\:\:canEditItem\(\) expects App\\Models\\ControlPlanItem, Illuminate\\Database\\Eloquent\\Model\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ItemDocumentController.php
+
+		-
+			message: '#^Parameter \#2 \$item of method App\\Services\\ControlPlanAccessService\:\:canViewItem\(\) expects App\\Models\\ControlPlanItem, Illuminate\\Database\\Eloquent\\Model\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/ItemDocumentController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/OrganizationController.php
+
+		-
+			message: '#^Cannot access property \$department on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Controllers/OrganizationController.php
+
+		-
+			message: '#^Cannot access property \$department_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Controllers/OrganizationController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Controllers/OrganizationController.php
+
+		-
+			message: '#^Cannot call method can\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Controllers/OrganizationController.php
+
+		-
+			message: '#^Cannot call method hasRole\(\) on App\\Models\\User\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Controllers/OrganizationController.php
+
+		-
+			message: '#^Call to function abort_unless\(\) with false and 403 will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: app/Http/Controllers/OrganizationUserController.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string\|null and int will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Http/Controllers/OrganizationUserController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$assignee_type\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$document_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$document_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$file_size\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$is_primary\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name_cyr\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$original_name\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$responsible_position\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uploader\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:displayName\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Cannot access property \$department on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Cannot access property \$department_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Cannot access property \$organization_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Instanceof between string and App\\Enums\\TaskSource will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Instanceof between string\|null and App\\Enums\\ReviewStatus will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TaskController\:\:applyTaskFilter\(\) has parameter \$today with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TaskController\:\:assignableUsers\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TaskController\:\:logResponse\(\) should return App\\Models\\TaskResponse but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\TaskController\:\:tenantOrganizations\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 4
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) expects callable\(Illuminate\\Database\\Eloquent\\Model, int\)\: array\{type\: string, label\: string, color\: ''blue''\|''gray''\|''green''\|''orange''\|''purple'', author\: mixed, org\: string\|null, date\: mixed, text\: string\|null, documents\: array\<int, array\{id\: mixed, original_name\: mixed, file_size\: mixed, created_at\: mixed\}\>\}, Closure\(App\\Models\\TaskResponse\)\: array\{type\: string, label\: string, color\: ''blue''\|''gray''\|''green''\|''orange''\|''purple'', author\: mixed, org\: string\|null, date\: mixed, text\: string\|null, documents\: array\<int, array\{id\: mixed, original_name\: mixed, file_size\: mixed, created_at\: mixed\}\>\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#1 \$user of method App\\Http\\Controllers\\TaskController\:\:assignableUsers\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#1 \$user of method App\\Http\\Controllers\\TaskController\:\:authorizeCreate\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#1 \$user of method App\\Http\\Controllers\\TaskController\:\:baseTaskQuery\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 7
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#2 \$by of method App\\Actions\\ControlPlans\\RemoveFromControlAction\:\:remove\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#2 \$by of method App\\Actions\\ControlPlans\\ReviewTaskAction\:\:approve\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#2 \$by of method App\\Actions\\ControlPlans\\ReviewTaskAction\:\:returnForRework\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#2 \$user of method App\\Http\\Controllers\\TaskController\:\:logResponse\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 4
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:all\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 4
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:values\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>name_cyr" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: app/Http/Controllers/TaskController.php
+
+		-
+			message: '#^Parameter \#2 \$createdBy of method App\\Actions\\YoshlarYetakchilari\\CreateYyAction\:\:execute\(\) expects int, int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/YoshlarYetakchisiController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:displayName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Middleware/HandleInertiaRequests.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Middleware/HandleInertiaRequests.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\ControlPlanItem\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Http/Middleware/HandleInertiaRequests.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\ControlPlanItem\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Http/Middleware/HandleInertiaRequests.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:all\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Http/Middleware/HandleInertiaRequests.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Appeals\\RecordDecisionRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Appeals/RecordDecisionRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Appeals\\StoreAppealRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Appeals/StoreAppealRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\HokimYordamchilari\\StoreHyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/HokimYordamchilari/StoreHyRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\HokimYordamchilari\\UpdateHyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/HokimYordamchilari/UpdateHyRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\Meetings\\StoreMeetingRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/Meetings/StoreMeetingRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\StoreControlPlanRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/StoreControlPlanRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\StoreEmployeeRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/StoreEmployeeRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\StoreTaskRequest\:\:withValidator\(\) has parameter \$validator with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Requests/StoreTaskRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\UpdateControlPlanRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/UpdateControlPlanRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\YoshlarYetakchilari\\StoreYyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/YoshlarYetakchilari/StoreYyRequest.php
+
+		-
+			message: '#^Method App\\Http\\Requests\\YoshlarYetakchilari\\UpdateYyRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Requests/YoshlarYetakchilari/UpdateYyRequest.php
+
+		-
+			message: '#^Match arm comparison between ''user'' and ''user'' is always true\.$#'
+			identifier: match.alwaysTrue
+			count: 1
+			path: app/Models/AppealAssignment.php
+
+		-
+			message: '#^Method App\\Models\\AppealCategory\:\:scopeRoots\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/AppealCategory.php
+
+		-
+			message: '#^Method App\\Models\\AppealCategory\:\:scopeRoots\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/AppealCategory.php
+
+		-
+			message: '#^Property App\\Models\\CitizenAppeal\:\:\$submitted_at \(string\|null\) does not accept Illuminate\\Support\\Carbon\|string\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/CitizenAppeal.php
+
+		-
+			message: '#^Offset ''completed''\|''in_progress''\|''not_started''\|''overdue'' on array\{not_started\: ''Бажарилмаган'', in_progress\: ''Бажарилмоқда'', completed\: ''Бажарилган'', overdue\: ''Муддати ўтган''\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: app/Models/ControlPlanItem.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string\|null and App\\Enums\\ReviewStatus\:\:SUBMITTED will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Models/ControlPlanItem.php
+
+		-
+			message: '#^Method App\\Models\\Department\:\:scopeKomplekslar\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: '#^Method App\\Models\\Department\:\:scopeKomplekslar\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: '#^Method App\\Models\\Department\:\:scopeTenants\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: '#^Method App\\Models\\Department\:\:scopeTenants\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/Department.php
+
+		-
+			message: '#^Method App\\Models\\Employee\:\:uniqueIds\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Models/Employee.php
+
+		-
+			message: '#^PHPDoc type array\<int, string\> of property App\\Models\\Employee\:\:\$appends is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$appends\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: app/Models/Employee.php
+
+		-
+			message: '#^PHPDoc type array\<int, string\> of property App\\Models\\Employee\:\:\$hidden is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$hidden\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: app/Models/Employee.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: app/Models/Employee.php
+
+		-
+			message: '#^Match arm comparison between ''organization''\|''user'' and App\\Enums\\AssigneeType\:\:ORGANIZATION is always false\.$#'
+			identifier: match.alwaysFalse
+			count: 1
+			path: app/Models/ItemResponsible.php
+
+		-
+			message: '#^Match arm comparison between ''organization''\|''user'' and App\\Enums\\AssigneeType\:\:USER is always false\.$#'
+			identifier: match.alwaysFalse
+			count: 1
+			path: app/Models/ItemResponsible.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$hokimlik_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:rootId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$assignee_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Policies/CitizenAppealPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$assignee_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Policies/CitizenAppealPolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/CitizenAppealPolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/ControlPlanPolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/EmployeePolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/HokimYordamchisiPolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/MahallaCouncilPolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/OrganizationPolicy.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: app/Policies/OrganizationPolicy.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between int and string\|null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Policies/OrganizationPolicy.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between int\|null and string will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Policies/OrganizationPolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/YoshlarYetakchisiPolicy.php
+
+		-
+			message: '#^Access to undefined constant Illuminate\\Database\\Eloquent\\Model\:\:TENANT_COLUMN\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Policies/YouthMeetingPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$default_route_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$default_sla_hours\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Method App\\Services\\Appeals\\AppealRoutingService\:\:findTarget\(\) should return array\{type\: string, id\: int, reason\?\: string, rule\?\: App\\Models\\RoutingRule\}\|null but returns array\{type\: ''council''\|''department''\|''user'', id\: int\<min, \-1\>\|int\<1, max\>\|non\-falsy\-string, reason\: non\-falsy\-string, rule\: App\\Models\\RoutingRule\}\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Method App\\Services\\Appeals\\AppealRoutingService\:\:resolveDefault\(\) should return int\|null but returns int\|string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Parameter \#1 \$hokimlikId of method App\\Services\\Appeals\\AppealRoutingService\:\:findRule\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Parameter \#2 \$categoryId of method App\\Services\\Appeals\\AppealRoutingService\:\:findRule\(\) expects int\|null, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>default_sla_hours" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Services/Appeals/AppealRoutingService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$created_by\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/ControlPlanAccessService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$department\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PositionDisplayService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$position\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PositionDisplayService.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\:\:withTrashed\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Services/ValidationRulesService.php

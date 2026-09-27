@@ -1,13 +1,46 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useFlash } from '@/Composables/useFlash';
-import type { Employee } from '@/types';
+import type { Employee, PageProps } from '@/types';
 
 const props = defineProps<{
     employee: Employee;
 }>();
 
 const { success } = useFlash();
+const page = usePage<PageProps>();
+
+const canDelete = computed(() => {
+    const perms = page.props.auth?.permissions ?? [];
+    const roles = page.props.auth?.roles ?? [];
+    return perms.includes('kadrlar.delete') || roles.includes('super-admin');
+});
+
+function destroyEmployee() {
+    const name = `${props.employee.last_name_cyr} ${props.employee.first_name_cyr}`;
+    if (confirm(`${name} ходимни архивга ўтказишни тасдиқлайсизми?`)) {
+        router.delete(`/employees/${props.employee.id}`);
+    }
+}
+
+function formatDate(dateStr: string | null): string {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    return `${dd}.${mm}.${d.getFullYear()}`;
+}
+
+const birthPlace = computed(() => {
+    const parts: string[] = [];
+    if (props.employee.birth_region) parts.push(props.employee.birth_region.name_cyr);
+    if (props.employee.birth_district) parts.push(props.employee.birth_district.name_cyr);
+    if (parts.length > 0) return parts.join(', ');
+    return props.employee.birth_place || '—';
+});
 </script>
 
 <template>
@@ -18,19 +51,31 @@ const { success } = useFlash();
 
         <!-- Сарлавҳа -->
         <div class="mb-6 flex items-center justify-between">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-900">{{ employee.last_name_cyr }} {{ employee.first_name_cyr }} {{ employee.middle_name_cyr }}</h1>
-                <p class="mt-1 text-sm text-gray-500">{{ employee.current_position }}</p>
+            <div class="flex items-center gap-4">
+                <div v-if="employee.photo_url" class="h-20 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
+                    <img :src="employee.photo_url" :alt="employee.full_name" class="h-full w-full object-cover" />
+                </div>
+                <div v-else class="flex h-20 w-16 flex-shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 text-xs text-gray-400">
+                    3×4
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">{{ employee.last_name_cyr }} {{ employee.first_name_cyr }} {{ employee.middle_name_cyr }}</h1>
+                    <p class="mt-1 text-sm text-gray-500">{{ employee.current_position }}</p>
+                </div>
             </div>
             <div class="flex gap-2">
-                <a :href="`/employees/${employee.id}/edit`"
+                <Link :href="`/employees/${employee.id}/edit`"
                     class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                     Таҳрирлаш
-                </a>
+                </Link>
                 <a :href="`/employees/${employee.id}/export/malumotnoma`"
                     class="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700">
                     DOCX юклаш
                 </a>
+                <button v-if="canDelete" type="button" @click="destroyEmployee"
+                    class="rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50">
+                    Архивга
+                </button>
             </div>
         </div>
 
@@ -44,8 +89,8 @@ const { success } = useFlash();
                     </div>
                     <div class="divide-y divide-gray-100">
                         <div class="grid grid-cols-2 px-4 py-2.5" v-for="field in [
-                            { label: 'Туғилган санаси', value: employee.birth_date },
-                            { label: 'Туғилган жойи', value: employee.birth_place },
+                            { label: 'Туғилган санаси', value: formatDate(employee.birth_date) },
+                            { label: 'Туғилган жойи', value: birthPlace },
                             { label: 'Миллати', value: employee.nationality },
                             { label: 'Партиявийлиги', value: employee.party_affiliation },
                             { label: 'Маълумоти', value: employee.education_level },

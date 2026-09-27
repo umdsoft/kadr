@@ -14,8 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee_relatives', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('employee_id')->constrained()->cascadeOnDelete();
             $table->string('relationship_type', 30)->comment('Қариндошлик тури — ENUM');
             $table->string('full_name_cyr', 255)->comment('Тўлиқ Ф.И.Ш. — инициаллар таъқиқланган');
             $table->smallInteger('birth_year')->comment('Туғилган йили');

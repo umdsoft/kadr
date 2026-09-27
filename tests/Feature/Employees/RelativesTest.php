@@ -1,20 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Employee;
+use App\Models\Role;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    Permission::create(['name' => 'employee.view']);
-    Permission::create(['name' => 'employee.create']);
-    Permission::create(['name' => 'employee.update']);
-
-    $role = Role::create(['name' => 'hr-staff']);
-    $role->givePermissionTo(['employee.view', 'employee.create', 'employee.update']);
+    Role::create(['name' => 'super-admin']);
 
     $this->user = User::factory()->create();
-    $this->user->assignRole('hr-staff');
+    $this->user->assignRole('super-admin');
     $this->employee = Employee::factory()->create();
 });
 

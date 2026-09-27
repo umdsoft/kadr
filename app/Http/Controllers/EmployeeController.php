@@ -18,25 +18,34 @@ use App\Models\Employee;
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class EmployeeController extends Controller
 {
     public function __construct(
         private EmployeeRepositoryInterface $repository,
-    ) {}
+    ) {
+        // Авторизация: index→viewAny, create/store→create, show→view,
+        // edit/update→update, destroy→delete (EmployeePolicy + sameTenant).
+        $this->authorizeResource(Employee::class, 'employee');
+    }
 
     public function index(Request $request): Response
     {
+        $filterKeys = ['search', 'department_id', 'education_level', 'nationality', 'birth_district_id', 'specialty'];
+
         $employees = $this->repository->paginate(
-            filters: $request->only(['search', 'department_id']),
+            filters: $request->only($filterKeys),
             perPage: (int) $request->input('per_page', 25),
         );
 
         return Inertia::render('Employees/Index', [
             'employees' => $employees,
-            'filters' => $request->only(['search', 'department_id']),
+            'filters' => $request->only($filterKeys),
         ]);
     }
 
@@ -45,53 +54,94 @@ class EmployeeController extends Controller
         return Inertia::render('Employees/Create');
     }
 
-    public function store(StoreEmployeeRequest $request, CreateEmployeeAction $action): RedirectResponse
-    {
-        $dto = EmployeeDTO::fromArray($request->validated());
-        $employee = $action->execute($dto);
+    public function store(
+        StoreEmployeeRequest $request,
+        CreateEmployeeAction $action,
+        SaveWorkHistoryAction $saveWorkHistory,
+        SaveRelativesAction $saveRelatives,
+    ): RedirectResponse {
+        $validated = $request->validated();
+
+        // Расм юклаш — МАХФИЙ (private/local) дискда, авторизацияланган маршрут орқали берилади.
+        if ($request->hasFile('photo')) {
+            $validated['photo_path'] = $request->file('photo')->store('employee-photos', 'local');
+        }
+
+        $dto = EmployeeDTO::fromArray($validated);
+
+        // Ходим + меҳнат фаолияти + қариндошлар — битта транзаксияда:
+        // ўрта йўлда хато бўлса ярим яратилган ходим қолмаслиги учун.
+        // Валидацияланган payload (input() эмас) — StoreEmployeeRequest work_history/relatives'ни ҳам текширади.
+        $workHistory = $validated['work_history'] ?? [];
+        $relatives = $validated['relatives'] ?? [];
+
+        $employee = DB::transaction(function () use ($dto, $workHistory, $relatives, $action, $saveWorkHistory, $saveRelatives): Employee {
+            $employee = $action->execute($dto);
+
+            if (is_array($workHistory) && count($workHistory) > 0) {
+                $saveWorkHistory->execute($employee, $workHistory);
+            }
+
+            if (is_array($relatives) && count($relatives) > 0) {
+                $saveRelatives->execute($employee, $relatives);
+            }
+
+            return $employee;
+        });
 
         return redirect()
             ->route('employees.show', $employee->id)
             ->with('success', 'Ходим муваффақиятли яратилди.');
     }
 
-    public function show(int $id): Response
+    public function show(Employee $employee): Response
     {
-        $employee = $this->repository->find($id);
-
-        abort_if($employee === null, 404);
-
-        $employee->load(['workHistory', 'relatives']);
+        $employee->load(['workHistory', 'relatives', 'department', 'position', 'birthRegion', 'birthDistrict']);
 
         return Inertia::render('Employees/Show', [
             'employee' => $employee,
         ]);
     }
 
-    public function edit(int $id): Response
+    public function edit(Employee $employee): Response
     {
-        $employee = $this->repository->find($id);
+        $employee->load(['department', 'position', 'birthRegion', 'birthDistrict', 'workHistory', 'relatives']);
 
-        abort_if($employee === null, 404);
+        // Таҳрирлаш формаси учун махфий майдонларни очиб берамиз (битта авторизацияланган ёзув).
+        $employee->makeVisible(['jshshir', 'passport_series', 'passport_number']);
 
         return Inertia::render('Employees/Edit', [
             'employee' => $employee,
         ]);
     }
 
-    public function update(UpdateEmployeeRequest $request, int $id, UpdateEmployeeAction $action): RedirectResponse
+    public function update(UpdateEmployeeRequest $request, Employee $employee, UpdateEmployeeAction $action): RedirectResponse
     {
-        $dto = EmployeeDTO::fromArray($request->validated());
-        $action->execute($id, $dto);
+        $validated = $request->validated();
+        $oldPhoto = $employee->photo_path;
+
+        // Расм юклаш — МАХФИЙ (private/local) дискда. Янги расм бўлмаса, мавжуди сақланади
+        // (мижоз photo_path ни ўзгартира олмайди — path traversal олдини олиш).
+        $validated['photo_path'] = $request->hasFile('photo')
+            ? $request->file('photo')->store('employee-photos', 'local')
+            : $employee->photo_path;
+
+        $dto = EmployeeDTO::fromArray($validated);
+        $action->execute($employee->id, $dto);
+
+        // Эски расмни ўчириш (янгиси юкланган бўлса) — orphan файллар қолмаслиги учун (M9).
+        if ($request->hasFile('photo') && $oldPhoto && $oldPhoto !== $validated['photo_path']) {
+            Storage::disk('local')->delete($oldPhoto);
+        }
 
         return redirect()
-            ->route('employees.show', $id)
+            ->route('employees.show', $employee->id)
             ->with('success', 'Ходим маълумотлари янгиланди.');
     }
 
-    public function destroy(int $id, DeleteEmployeeAction $action): RedirectResponse
+    public function destroy(Employee $employee, DeleteEmployeeAction $action): RedirectResponse
     {
-        $action->execute($id);
+        $action->execute($employee->id);
 
         return redirect()
             ->route('employees.index')
@@ -99,20 +149,33 @@ class EmployeeController extends Controller
     }
 
     /**
+     * Ходим расмини авторизация билан бериш (public диск ўрнига).
+     * Route model binding tenant scope'ни қўллайди; қўшимча view рухсати текширилади.
+     */
+    public function photo(Employee $employee): BinaryFileResponse
+    {
+        $this->authorize('view', $employee);
+
+        abort_if($employee->photo_path === null || $employee->photo_path === '', 404);
+        abort_unless(Storage::disk('local')->exists($employee->photo_path), 404);
+
+        return response()->file(Storage::disk('local')->path($employee->photo_path));
+    }
+
+    /**
      * 3-блок: Меҳнат фаолиятини сақлаш.
      */
     public function saveWorkHistory(
         SaveWorkHistoryRequest $request,
-        int $id,
+        Employee $employee,
         SaveWorkHistoryAction $action,
     ): RedirectResponse {
-        $employee = $this->repository->find($id);
-        abort_if($employee === null, 404);
+        $this->authorize('update', $employee);
 
         $action->execute($employee, $request->validated('work_history'));
 
         return redirect()
-            ->route('employees.show', $id)
+            ->route('employees.show', $employee->id)
             ->with('success', 'Меҳнат фаолияти сақланди.');
     }
 
@@ -121,16 +184,15 @@ class EmployeeController extends Controller
      */
     public function saveRelatives(
         SaveRelativesRequest $request,
-        int $id,
+        Employee $employee,
         SaveRelativesAction $action,
     ): RedirectResponse {
-        $employee = $this->repository->find($id);
-        abort_if($employee === null, 404);
+        $this->authorize('update', $employee);
 
         $action->execute($employee, $request->validated('relatives'));
 
         return redirect()
-            ->route('employees.show', $id)
+            ->route('employees.show', $employee->id)
             ->with('success', 'Қариндошлар маълумотлари сақланди.');
     }
 }

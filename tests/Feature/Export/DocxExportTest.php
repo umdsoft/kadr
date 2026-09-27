@@ -1,22 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Exports\MalumotnomaDocxExporter;
 use App\Models\Employee;
+use App\Models\Relative;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\WorkHistory;
-use App\Models\Relative;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
-    Permission::create(['name' => 'employee.view']);
-    Permission::create(['name' => 'employee.export']);
-
-    $role = Role::create(['name' => 'hr-staff']);
-    $role->givePermissionTo(['employee.view', 'employee.export']);
+    Role::create(['name' => 'super-admin']);
 
     $this->user = User::factory()->create();
-    $this->user->assignRole('hr-staff');
+    $this->user->assignRole('super-admin');
 });
 
 test('docx fayl muvaffaqiyatli generatsiya qilinadi', function () {
